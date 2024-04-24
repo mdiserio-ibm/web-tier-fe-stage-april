@@ -4,9 +4,9 @@ function getCards() {
     fetch(url).then(response => response.json())
         .then(data => {
             let container = document.getElementById("container-cards");
-            data.forEach(element => {
-                console.log(element);
+            let postsList = [];
 
+            data.forEach(element => {
                 let card = document.createElement("div");
                 card.classList.add("card");
 
@@ -38,9 +38,21 @@ function getCards() {
                 cardBody.appendChild(cardText);
                 cardBody.appendChild(cardButton);
                 card.appendChild(cardBody);
+
+                postsList.push(card);
                 
-                container.appendChild(card);
+                // container.appendChild(card);
             });
+
+            postsList.sort((a,b) => {
+                console.log(a.firstChild.firstChild);
+                if(a.firstChild.firstChild.textContent < b.firstChild.firstChild.textContent) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+            postsList.forEach(element => container.appendChild(element));
         });
 }
 
